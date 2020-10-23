@@ -1,0 +1,167 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600&display=swap");
+
+$font-base: "Barlow Semi Condensed", sans-serif;
+
+$violet-color: hsl(263, 55%, 52%);
+$grayish-blue-color: hsl(217, 19%, 35%);
+$blackish-blue-color: hsl(219, 29%, 14%);
+$white-color: hsl(0, 0%, 100%);
+$light-color: hsl(0, 0%, 97%);
+$light-gray-color: hsl(0, 0%, 81%);
+$light-grayish-blue-color: hsl(210, 46%, 95%);
+$gray-color: hsl(0, 0, 50%);
+
+@mixin setColor($color, $option) {
+  @if lightness($color) < 55 {
+    @if $option == "h4" {
+      color: $light-grayish-blue-color;
+    }
+    @if $option == "subscription" {
+      color: $light-gray-color;
+    }
+    @if $option == "title" {
+      color: $white-color;
+    }
+  } @else {
+    @if $option == "h4" {
+      color: $grayish-blue-color;
+    }
+    @if $option == "subscription" {
+      color: $gray-color;
+    }
+    @if $option == "title" {
+      color: $grayish-blue-color;
+    }
+  }
+}
+
+@mixin setCardColor($color) {
+  background-color: $color;
+
+  .card__image {
+    border: 4px solid lighten($color, 10);
+  }
+
+  .card__info {
+    h4 {
+      @include setColor($color, "h4");
+    }
+  }
+
+  .card__subscription {
+    @include setColor($color, "subscription");
+  }
+
+  .card__title {
+    @include setColor($color, "title");
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-base;
+  background-color: $light-grayish-blue-color;
+}
+
+.container {
+  max-width: 80%;
+  margin: 128px auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 32px;
+}
+
+.card {
+  padding: 24px;
+  background-color: $violet-color;
+  color: $white-color;
+  border-radius: 16px;
+  box-shadow: 0 0 16px rgb(206, 194, 194);
+  position: relative;
+  z-index: 1;
+  font-weight: 500;
+
+  &__quote {
+    position: absolute;
+    top: 0px;
+    right: 30%;
+    z-index: 10;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 100;
+  }
+
+  &__body {
+    position: relative;
+    z-index: 100;
+  }
+
+  &__image {
+    border-radius: 50%;
+  }
+
+  &__info {
+    flex: 1;
+    margin-left: 16px;
+  }
+
+  &__title {
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+}
+
+.card--violet {
+  @include setCardColor($violet-color);
+  grid-row: 1 / 2;
+  grid-column: 1 / 3;
+}
+
+.card--grayish-blue {
+  @include setCardColor($grayish-blue-color);
+  grid-row: 1 / 2;
+  grid-column: 3 / 4;
+}
+
+.card--light {
+  @include setCardColor($light-color);
+  grid-row: 1 / 3;
+  grid-column: 4 / 5;
+}
+
+.card--white {
+  @include setCardColor($white-color);
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+}
+
+.card--blackish-blue {
+  @include setCardColor($blackish-blue-color);
+  grid-row: 2 / 3;
+  grid-column: 2 / 4;
+}
+
+@media only screen and (max-width: 375px) {
+  .container {
+    display: block;
+    max-width: 90%;
+    margin: 64px auto;
+
+    .card {
+      margin-bottom: 32px;
+    }
+  }
+}
